@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { LogInComponent } from './components/log-in/log-in.component';
@@ -7,6 +6,9 @@ import { CreateAccountComponent } from './components/create-account/create-accou
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AnalyticsComponent } from './components/analytics/analytics.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { SupportComponent } from './components/support/support.component';
 
 const routes: Routes = [
   { path: '', component: AboutComponent },
@@ -16,6 +18,10 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'transactions', component: TransactionsComponent},
   { path: 'sidebar', component: SidebarComponent},
+  { path: 'analytics', component: AnalyticsComponent},
+  { path: 'settings', component: SettingsComponent},
+  { path: 'support', component: SupportComponent},
+  { path: '**', redirectTo: '/about' } // Fallback for unknown routes
   // Add other routes here
 ];
 
