@@ -1,0 +1,1 @@
+// handles login/logout and user authentication state

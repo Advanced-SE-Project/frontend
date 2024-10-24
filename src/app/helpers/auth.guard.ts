@@ -1,0 +1,1 @@
+// ensures some routes can only be accessed by authenticated users
