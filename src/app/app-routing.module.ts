@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AboutComponent } from './about/about.component';
-import { LogInComponent } from './log-in/log-in.component';
-import { CreateAccountComponent } from './create-account/create-account.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { AboutComponent } from './components/about/about.component';
+import { LogInComponent } from './components/log-in/log-in.component';
+import { CreateAccountComponent } from './components/create-account/create-account.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', component: AboutComponent },
