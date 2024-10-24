@@ -5,6 +5,8 @@ import { AboutComponent } from './components/about/about.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const routes: Routes = [
   { path: '', component: AboutComponent },
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'create-account', component: CreateAccountComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'transactions', component: TransactionsComponent},
+  { path: 'sidebar', component: SidebarComponent},
   // Add other routes here
 ];
 
