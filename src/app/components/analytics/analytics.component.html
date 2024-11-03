@@ -1,4 +1,8 @@
-  <div class="analytics-container">
+<div class="analytics-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="analytics-content">
+    
     <!-- Line Chart -->
     <div class="chart-section">
       <h2>Income and Expenses (Line Chart)</h2>
@@ -31,17 +35,16 @@
         [type]="'pie'">
       </canvas>
     </div>
-
+    
     <!-- Doughnut Chart -->
-  <div class="chart-section">
-    <h2>Spending Breakdown (Doughnut Chart)</h2>
-    <canvas baseChart
-      [data]="doughnutChartData"
-      [options]="doughnutChartOptions"
-      [legend]="doughnutChartLegend"
-      [type]="'doughnut'">
-    </canvas>
+    <div class="chart-section">
+      <h2>Spending Breakdown (Doughnut Chart)</h2>
+      <canvas baseChart
+        [data]="doughnutChartData"
+        [options]="doughnutChartOptions"
+        [legend]="doughnutChartLegend"
+        [type]="'doughnut'">
+      </canvas>
+    </div>
   </div>
-  </div>
-  
-  
+</div>
