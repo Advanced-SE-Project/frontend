@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
 
@@ -10,6 +11,7 @@ import { ChartData, ChartOptions } from 'chart.js';
   imports: [
     CommonModule,
     RouterModule,
+    SidebarComponent,
     BaseChartDirective,
   ],
   templateUrl: './analytics.component.html',
