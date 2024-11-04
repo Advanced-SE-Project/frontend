@@ -7,13 +7,14 @@
 
 .sidenav {
   width: 220px;
-  background-color: #9ccefc;
+  background-color: #1e88e5;
   color: white;
   position: relative;
 }
 
 .mat-toolbar {
   background-color: inherit;
+  color: white;
 }
 
 .mat-nav-list a {
@@ -28,6 +29,11 @@
   margin-bottom: 2px;
   font-size: 24px;
   vertical-align: middle;
+  color: white;
+}
+
+span {
+  color: white;
 }
 
 .mat-nav-list a:hover {

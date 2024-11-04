@@ -1,0 +1,125 @@
+.about-container {
+    height: 100vh;
+    background: linear-gradient(135deg, #1a237e, #1e88e5);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+
+  .about-toolbar button {
+    color: white;
+    background-color: transparent;
+    padding: 6px 17px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    border: none;
+    border-bottom: 2px solid white;
+    cursor: pointer;
+  }
+
+  .about-toolbar button:hover {
+    box-shadow: 0 4px 15px rgba(0, 150, 255, 0.6);
+  }
+  
+  .about-toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+  }
+  
+  .app-logo {
+    color: white;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+  
+  .about-content {
+    max-width: 700px;
+    padding: 20px;
+    margin-top: 60px;
+  }
+  
+  .about-content h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  
+  .about-content p {
+    font-size: 1.3rem;
+    color: #e0f7fa;
+    margin-bottom: 40px;
+  }
+  
+  .about-content button {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .about-content button:hover {
+    box-shadow:
+      0 8px 25px rgba(0, 150, 255, 0.8),
+      0 0 50px rgba(0, 150, 255, 0.5);
+  }
+
+  .about-us {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: start;
+    padding: 50px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #1a237e, #1e88e5);
+    color: #ffffff;
+  }
+
+  .about-us h2 {
+    font-size: 3.1rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .about-us p {
+    font-size: 1.3rem;
+    color: #e0f7fa;
+    margin-bottom: 40px;
+  }
+
+  .about-us button {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .about-us button:hover {
+    box-shadow:
+      0 8px 25px rgba(0, 150, 255, 0.8),
+      0 0 50px rgba(0, 150, 255, 0.5);
+  }

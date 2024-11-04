@@ -1,1 +1,31 @@
-<p>about works!</p>
+<div class="about-container">
+  <mat-toolbar color="primary" class="about-toolbar">
+    <span class="app-logo">Personal Budget App</span>
+    <span class="spacer"></span>
+    <button mat-button routerLink="/login">Login</button>
+  </mat-toolbar>
+
+  <div class="about-content">
+    <h1>Take Control of Your Finances</h1>
+    <p>Effortlessly track your income and expenses, set budgets, and achieve your financial goals with ease.</p>
+    <button mat-raised-button color="accent" (click)="scrollToAbout()">Get Started</button>
+  </div>
+</div>
+
+<div id="about-text" class="about-us">
+  <h2>About Us</h2>
+  <p>Lorem ipsum odor amet, consectetuer adipiscing elit. Purus dictum sem elementum; primis porttitor urna ex praesent. <br> 
+    Aerat lacus vitae faucibus neque felis ornare a. Penatibus nam at ante interdum lectus, aliquet pharetra. Tempor tellus lectus congue<br>
+    nibh ante vestibulum sociosqu justo. Egestas congue duis placerat risus vitae nunc. Enim ut felis ante arcu ultricies scelerisque <br>
+    dapibus himenaeos. Vulputate habitant placerat felis risus molestie ullamcorper. Torquent feugiat gravida lorem blandit eu vehicula;<br>
+    quisque litora fermentum.</p>
+  <p>Mi pharetra aenean imperdiet justo dolor dui laoreet. Pharetra elit enim molestie enim nostra conubia. Nulla taciti sagittis <br>
+    nec laoreet turpis convallis nam. Hac quisque aliquam lectus hendrerit dictumst neque fusce. Facilisi vestibulum aliquet rutrum <br>
+    pulvinar dignissim. Mattis vel massa varius laoreet dis dis volutpat cras efficitur. Gravida quisque urna aenean consectetur gravida!<br>
+    Fusce aptent nunc volutpat, elementum cras semper ligula.</p>
+  <p>Per maecenas purus ornare etiam libero. Dapibus fermentum parturient placerat dolor nostra dictum gravida malesuada? Tincidunt <br>
+    cras mollis curabitur morbi sem fringilla congue. Id arcu semper condimentum curae habitant vivamus turpis donec faucibus. Nam sodales <br>
+    tortor congue nulla quis arcu. Accumsan congue consequat fermentum nisl pulvinar sed ad ultricies parturient. Sed placerat turpis <br>
+    himenaeos posuere fusce dolor neque in mi.</p>
+  <button mat-raised-button color="accent" routerLink="/create-account">Create Account</button>
+</div>
