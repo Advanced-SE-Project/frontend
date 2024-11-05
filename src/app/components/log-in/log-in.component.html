@@ -1,1 +1,22 @@
-<p>log-in works!</p>
+<div class="login-container">
+  <div class="login-box">
+    <h2>Login</h2>
+    <form (ngSubmit)="login()">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="user.username" name="username" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="user.password" name="password" type="password" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Login</button>
+    </form>
+    <div class="login-links">
+      <a routerLink="/create-account">Create Account</a> | 
+      <a href="#">Forgot Password?</a>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
-import { LogInComponent } from './components/log-in/log-in.component';
+import { LoginComponent } from './components/log-in/log-in.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
@@ -16,7 +16,7 @@ export const routes: Routes = [
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'support', component: SupportComponent },
   { path: 'settings', component: SettingsComponent },
-  { path: 'log-in', component: LogInComponent },
+  { path: 'log-in', component: LoginComponent },
   { path: 'create-account', component: CreateAccountComponent},
   { path: '**', redirectTo: '/about' } // Fallback for unknown routes
 ];
