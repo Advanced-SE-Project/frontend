@@ -1,9 +1,25 @@
 <div class="settings-container">
+  <app-sidebar></app-sidebar>
 
-    <app-sidebar></app-sidebar>
-  
+  <div class="settings-content">
+    <h1>Settings</h1>
 
-    <div class="settings-content">
+    <!-- Profile Settings -->
+    <section class="profile-settings">
+      <h2>Profile Settings</h2>
+      <div class="setting">
+        <label>Username:</label>
+        <input [(ngModel)]="profileSettings.username" placeholder="Enter username">
+      </div>
+      <div class="setting">
+        <label>Email:</label>
+        <input [(ngModel)]="profileSettings.email" placeholder="Enter email" type="email">
+      </div>
+      <div class="setting">
+        <label>Password:</label>
+        <input [(ngModel)]="profileSettings.password" placeholder="Enter password" type="password">
+      </div>
+      <button mat-button color="primary" (click)="updateProfile()">Save Profile</button>
+    </section>
 
-    </div>
-  </div>  
+</div>

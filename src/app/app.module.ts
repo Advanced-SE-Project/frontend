@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppRoutingModule } from './app-routing.module';
+import { Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -9,9 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [],
   imports: [
     CommonModule,
-    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule,
   ]
 })
 export class AppModule { }
