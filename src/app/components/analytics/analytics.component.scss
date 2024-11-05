@@ -1,6 +1,7 @@
 .analytics-container {
   display: flex;
   min-height: 100vh;
+  background-color: #f0f4f8;
 }
 
 .analytics-content {
@@ -16,7 +17,7 @@
 .chart-section {
   max-width: 450px;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: white;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
