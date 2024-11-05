@@ -1,1 +1,27 @@
-<p>create-account works!</p>
+<div class="create-account-container">
+  <div class="create-account-box">
+    <h2>Create Account</h2>
+    <form (ngSubmit)="createAccount()">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="user.username" name="username" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="user.password" name="password" type="password" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput [(ngModel)]="user.confirmPassword" name="confirmPassword" type="password" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Create Account</button>
+    </form>
+
+    <div class="create-account-links">
+      <a routerLink="/login">Already have an account? Login</a>
+    </div>
+  </div>
+</div>
