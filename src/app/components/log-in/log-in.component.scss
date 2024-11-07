@@ -59,3 +59,16 @@
   .login-links a:hover {
     text-decoration: underline;
   }
+
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .login-box {
+      padding: 20px 15px; /* Reduce padding on smaller screens */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .login-box {
+      padding: 15px 10px; /* Further reduce padding on very small screens */
+    }
+  }
