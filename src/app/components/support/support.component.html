@@ -1,9 +1,59 @@
 <div class="support-container">
-
-    <app-sidebar></app-sidebar>
+  <app-sidebar></app-sidebar>
   
-
-    <div class="support-content">
-
+  <div class="support-content">
+    <h1>Support Center</h1>
+    <p>If you have questions or need assistance, check our FAQs below or reach out to us through the contact form.</p>
+  
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2>Frequently Asked Questions</h2>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> How do I reset my password? </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>To reset your password, go to the login page and click "Forgot Password." Follow the instructions sent to your email.</p>
+        </mat-expansion-panel>
+        
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> How can I track my expenses? </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>Go to the Transactions page to view and manage your expenses.</p>
+        </mat-expansion-panel>
+  
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> How do I update my account information? </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>Visit the Settings page to update your account details.</p>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
+  
+    <!-- Contact Form -->
+    <div class="contact-form">
+      <h2>Contact Us</h2>
+      <form>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Your Name">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Your Email">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Message</mat-label>
+          <textarea matInput placeholder="Your Message"></textarea>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+  
   </div>  
