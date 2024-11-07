@@ -1,9 +1,64 @@
 <div class="transactions-container">
-
-    <app-sidebar></app-sidebar>
+  <app-sidebar></app-sidebar>
   
-
-    <div class="transactions-content">
-
+  <div class="transactions-content">
+    <h1>Transactions</h1>
+    <h2>Manage your income and expenses by adding or updating records below.</h2>
+  
+    <div class="transaction-form-section">
+      <form [formGroup]="transactionForm" (ngSubmit)="createTransaction()">
+        <div class="form-fields">
+          <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option value="receive">Receive</mat-option>
+              <mat-option value="spent">Spent</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount">
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="Groceries">Groceries</mat-option>
+              <mat-option value="Salary">Salary</mat-option>
+              <mat-option value="Entertainment">Entertainment</mat-option>
+              <mat-option value="Utilities">Utilities</mat-option>
+              <mat-option value="Rent">Rent</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <button mat-raised-button color="primary" type="submit">Save</button>
+      </form>
     </div>
-  </div>  
+  
+    <div class="transactions-list">
+      <h2>Recent Transactions</h2>
+      <mat-list *ngIf="transactions$ | async as transactions">
+        <mat-list-item *ngFor="let transaction of transactions">
+          <p>{{ transaction.date }} - {{ transaction.type }} - {{ transaction.amount }} - {{ transaction.category }}</p>
+          <div class="actions">
+            <button mat-icon-button color="primary" (click)="updateTransaction(transaction.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteTransaction(transaction.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>
