@@ -1,3 +1,19 @@
+.sidenav-toolbar {
+  display: flex;
+  align-items: center;
+}
+
+.sidenav-logo {
+  height: 40px;
+  width: auto;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.sidenav-title {
+  font-size: 1.3rem;
+}
+
 .sidenav-container {
   height: 100vh;
   display: flex;
