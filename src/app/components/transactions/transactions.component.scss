@@ -1,0 +1,50 @@
+.transactions-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f0f4f8;
+}
+
+.transactions-content {
+  padding: 20px;
+  background-color: white;
+  overflow-y: auto;
+  max-width: 600px;
+  margin: auto;
+  text-align: left;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #1a237e;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #1e88e5;
+  padding-bottom: 8px;
+}
+
+.transaction-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .transaction-form {
+    grid-template-columns: 1fr;
+  }
+}
