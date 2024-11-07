@@ -2,8 +2,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #f0f4f8;
+    padding: 20px;
   }
   
   .create-account-box {
@@ -58,4 +59,25 @@
   
   .create-account-links a:hover {
     text-decoration: underline;
+  }
+
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .create-account-box {
+      padding: 20px 15px; /* Reduce padding on smaller screens */
+    }
+
+    .create-account-links {
+      font-size: 0.85rem; /* Slightly smaller font size */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .create-account-box {
+      padding: 15px 10px; /* Further reduce padding on very small screens */
+    }
+
+    .create-account-box h2 {
+      font-size: 1.3rem;
+    }
   }
