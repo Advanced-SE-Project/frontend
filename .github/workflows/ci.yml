@@ -52,8 +52,21 @@ jobs:
       - name: Wait for the app to be ready
         run: npx wait-on http://localhost:4200
 
-      # Step 8: Run Cypress tests
+      # Step 8: Count test files
+      - name: Check for Cypress spec files
+        id: check_files
+        run: |
+          if [ -z "$(find cypress/e2e -name '*.cy.*' -print -quit)" ]; then
+            echo "No spec files found"
+            echo "run_cypress=false" >> $GITHUB_ENV
+          else
+            echo "Spec files found"
+            echo "run_cypress=true" >> $GITHUB_ENV
+          fi
+
+      # Step 9: Run Cypress tests conditionally
       - name: Run Cypress tests
+        if: ${{ env.run_cypress == 'true' }}
         run: npx cypress run
         env:
           CYPRESS_baseUrl: http://localhost:4200
