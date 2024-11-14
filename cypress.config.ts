@@ -4,7 +4,7 @@ import webpack from "@cypress/webpack-preprocessor";
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // Configure the Webpack preprocessor for TypeScript
+
       const options = {
         webpackOptions: {
           resolve: {
@@ -30,13 +30,6 @@ export default defineConfig({
 
       return config;
     },
-  },
-
-  component: {
-    devServer: {
-      framework: "angular",
-      bundler: "webpack",
-    },
-    specPattern: "**/*.cy.ts",
+    baseUrl: "http://localhost:4200",
   },
 });
