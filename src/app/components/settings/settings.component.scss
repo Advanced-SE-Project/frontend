@@ -2,16 +2,14 @@
   display: flex;
   min-height: 100vh;
   background-color: #f0f4f8;
-  align-items: center;
-  justify-content: center;
 }
 
   .settings-content {
     flex: 1;
-    padding: 40px;
+    padding: 20px;
     background-color: white;
     overflow-y: auto;
-    max-width: 800px;
+    max-width: 500px;
     margin: auto;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);

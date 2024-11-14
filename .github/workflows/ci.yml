@@ -1,0 +1,72 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.18.0'
+
+      # Step 3: Cache npm dependencies for faster builds
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 5: Build the Angular app
+      - name: Build Angular app
+        run: npm run build --if-present
+
+      # Step 6: Start the Angular app
+      - name: Start Angular app
+        run: npm start &
+        env:
+          CI: true
+
+      # Step 7: Wait for the app to be ready
+      - name: Wait for the app to be ready
+        run: npx wait-on http://localhost:4200
+
+      # Step 8: Count test files
+      - name: Check for Cypress spec files
+        id: check_files
+        run: |
+          if [ -z "$(find cypress/e2e -name '*.cy.*' -print -quit)" ]; then
+            echo "No spec files found"
+            echo "run_cypress=false" >> $GITHUB_ENV
+          else
+            echo "Spec files found"
+            echo "run_cypress=true" >> $GITHUB_ENV
+          fi
+
+      # Step 9: Run Cypress tests conditionally
+      - name: Run Cypress tests
+        if: ${{ env.run_cypress == 'true' }}
+        run: npx cypress run
+        env:
+          CYPRESS_baseUrl: http://localhost:4200
