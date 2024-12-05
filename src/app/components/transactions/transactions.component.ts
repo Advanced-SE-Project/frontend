@@ -56,6 +56,19 @@ export class TransactionsComponent implements OnInit {
   createTransaction(): void {
     if (this.transactionForm.valid) {
       const transactionData = this.transactionForm.value;
+  
+      const rawDate: Date = transactionData.date;
+  
+      const day = String(rawDate.getDate()).padStart(2, '0');
+      const month = String(rawDate.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
+      const year = rawDate.getFullYear();
+      const formattedDate = `${day}-${month}-${year}`;
+  
+      transactionData.date = formattedDate;
+  
+      // For now, add a hardcoded userId
+      transactionData.userId = 1;
+  
       this.transactionService.createTransaction(transactionData).subscribe({
         next: () => {
           this.successMessage = 'Transaction saved successfully!';
@@ -66,5 +79,5 @@ export class TransactionsComponent implements OnInit {
         },
       });
     }
-  }
+  }  
 }
