@@ -7,18 +7,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-log-in',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    RouterModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule
-  ],
-  templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss'
+    selector: 'app-log-in',
+    standalone: true,
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule
+    ],
+    templateUrl: './log-in.component.html',
+    styleUrl: './log-in.component.scss'
 })
 
 export class LoginComponent {

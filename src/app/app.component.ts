@@ -8,9 +8,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   imports: [
     RouterModule,
     SidebarComponent,
+    // Add other modules if needed
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'frontend-app';
