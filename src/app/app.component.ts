@@ -3,14 +3,15 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
-    imports: [
-        RouterModule,
-        SidebarComponent,
-    ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+  selector: 'app-root',
+  standalone: true,
+  imports: [
+    RouterModule,
+    SidebarComponent,
+    // Add other modules if needed
+  ],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'frontend-app';
