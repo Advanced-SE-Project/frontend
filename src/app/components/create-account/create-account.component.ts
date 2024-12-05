@@ -28,7 +28,7 @@ export class CreateAccountComponent {
   createAccount() {
     if (this.user.password === this.user.confirmPassword) {
       console.log('Account created:', this.user);
-      this.router.navigate(['/login']);
+      this.router.navigate(['/log-in']);
     } else {
       console.error('Passwords do not match');
     }
