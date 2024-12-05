@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import { TransactionService } from '../../services/transaction.service';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -32,50 +33,39 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatButtonModule,
     MatButtonToggleModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
 })
 
-export class TransactionsComponent {
+export class TransactionsComponent implements OnInit {
   transactionForm: FormGroup;
-  transactions$: Observable<any[]>;
+  successMessage: string = '';
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private transactionService: TransactionService) {
     this.transactionForm = this.fb.group({
-      date: '',
-      type: '',
-      amount: '',
-      category: ''
+      date: ['', Validators.required],
+      type: ['', Validators.required],
+      amount: ['', [Validators.required, Validators.min(1)]],
+      category: ['', Validators.required],
     });
-    this.transactions$ = this.fetchTransactions();
   }
 
-  fetchTransactions(): Observable<any[]> {
-    return this.http.get<any[]>('/api/transactions');
-  }
+  ngOnInit(): void {}
 
-  createTransaction() {
+  createTransaction(): void {
     if (this.transactionForm.valid) {
-      this.http.post('/api/transactions', this.transactionForm.value).subscribe({
-        next: result => console.log('Transaction Created', result),
-        error: error => console.error('There was an error!', error)
+      const transactionData = this.transactionForm.value;
+      this.transactionService.createTransaction(transactionData).subscribe({
+        next: () => {
+          this.successMessage = 'Transaction saved successfully!';
+          this.transactionForm.reset();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error('Error saving transaction:', err.message);
+        },
       });
     }
-  }
-
-  updateTransaction(id: number) {
-    this.http.put(`/api/transactions/${id}`, this.transactionForm.value).subscribe({
-      next: result => console.log('Transaction Updated', result),
-      error: error => console.error('There was an error!', error)
-    });
-  }
-
-  deleteTransaction(id: number) {
-    this.http.delete(`/api/transactions/${id}`).subscribe({
-      next: result => console.log('Transaction Deleted', result),
-      error: error => console.error('There was an error!', error)
-    });
   }
 }
