@@ -39,8 +39,21 @@ h2 {
   align-items: center;
 }
 
-.mat-form-field {
-  width: 100%;
+.form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+}
+
+.success-message {
+  margin-top: 15px;
+  color: green;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {
