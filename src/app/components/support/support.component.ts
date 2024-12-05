@@ -9,6 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
     selector: 'app-support',
+    standalone: true,
     imports: [
         CommonModule,
         RouterModule,

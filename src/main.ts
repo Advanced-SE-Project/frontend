@@ -5,14 +5,13 @@ import { routes } from './app/app.routes';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { importProvidersFrom } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes), 
-    // Include BrowserAnimationsModule for animations
     importProvidersFrom(BrowserAnimationsModule),
-
-    // Keep the ng2-charts providers
     provideCharts(withDefaultRegisterables()),
+    provideHttpClient(),
   ],
 }).catch((err) => console.error(err));

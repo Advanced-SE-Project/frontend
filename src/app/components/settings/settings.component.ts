@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-settings',
+    standalone: true,
     imports: [
         CommonModule,
         RouterModule,

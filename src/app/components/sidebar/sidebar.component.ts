@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'app-sidebar',
+    standalone: true,
     imports: [
         CommonModule,
         RouterModule,

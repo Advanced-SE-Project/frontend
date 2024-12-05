@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 
 @Component({
     selector: 'app-about',
+    standalone: true,
     imports: [
         CommonModule,
         RouterModule,

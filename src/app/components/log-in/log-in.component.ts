@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-log-in',
+    standalone: true,
     imports: [
         CommonModule,
         RouterModule,

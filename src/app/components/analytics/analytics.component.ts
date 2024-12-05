@@ -7,6 +7,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 
 @Component({
     selector: 'app-analytics',
+    standalone: true,
     imports: [
         CommonModule,
         RouterModule,
