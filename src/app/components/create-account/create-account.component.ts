@@ -7,18 +7,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-create-account',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule
-  ],
-  templateUrl: './create-account.component.html',
-  styleUrls: ['./create-account.component.scss']
+    selector: 'app-create-account',
+    imports: [
+        CommonModule,
+        FormsModule,
+        RouterModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule
+    ],
+    templateUrl: './create-account.component.html',
+    styleUrls: ['./create-account.component.scss']
 })
 export class CreateAccountComponent {
   user = { username: '', password: '', confirmPassword: '' };

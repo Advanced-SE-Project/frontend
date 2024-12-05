@@ -17,26 +17,25 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
-  selector: 'app-transactions',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    HttpClientModule,
-    SidebarComponent,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatIconModule,
-    MatListModule,
-  ],
-  templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.scss'
+    selector: 'app-transactions',
+    imports: [
+        CommonModule,
+        RouterModule,
+        HttpClientModule,
+        SidebarComponent,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatIconModule,
+        MatListModule,
+    ],
+    templateUrl: './transactions.component.html',
+    styleUrl: './transactions.component.scss'
 })
 
 export class TransactionsComponent implements OnInit {

@@ -6,17 +6,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
-  selector: 'app-about',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    RouterModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule
-  ],
-  templateUrl: './about.component.html',
-  styleUrl: './about.component.scss'
+    selector: 'app-about',
+    imports: [
+        CommonModule,
+        RouterModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule
+    ],
+    templateUrl: './about.component.html',
+    styleUrl: './about.component.scss'
 })
 
 export class AboutComponent {

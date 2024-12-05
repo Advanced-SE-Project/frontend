@@ -6,16 +6,15 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
 
 @Component({
-  selector: 'app-analytics',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    SidebarComponent,
-    BaseChartDirective,
-  ],
-  templateUrl: './analytics.component.html',
-  styleUrl: './analytics.component.scss'
+    selector: 'app-analytics',
+    imports: [
+        CommonModule,
+        RouterModule,
+        SidebarComponent,
+        BaseChartDirective,
+    ],
+    templateUrl: './analytics.component.html',
+    styleUrl: './analytics.component.scss'
 })
 export class AnalyticsComponent {
   // Line chart data, options, and configuration

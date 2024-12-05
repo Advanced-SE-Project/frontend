@@ -5,16 +5,15 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    RouterModule,
-    SidebarComponent,
-    FormsModule
-  ],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss'
+    selector: 'app-settings',
+    imports: [
+        CommonModule,
+        RouterModule,
+        SidebarComponent,
+        FormsModule
+    ],
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.scss'
 })
 
 export class SettingsComponent {

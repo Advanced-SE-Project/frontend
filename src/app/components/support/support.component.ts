@@ -8,19 +8,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
-  selector: 'app-support',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    RouterModule,
-    SidebarComponent,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatExpansionModule
-  ],
-  templateUrl: './support.component.html',
-  styleUrl: './support.component.scss'
+    selector: 'app-support',
+    imports: [
+        CommonModule,
+        RouterModule,
+        SidebarComponent,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatExpansionModule
+    ],
+    templateUrl: './support.component.html',
+    styleUrl: './support.component.scss'
 })
 export class SupportComponent {
 
