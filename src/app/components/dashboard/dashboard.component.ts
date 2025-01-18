@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching transactions:', err);
+        alert('Failed to fetch transactions. Please log in again.');
       },
     });
   }

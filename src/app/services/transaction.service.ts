@@ -22,7 +22,12 @@ export class TransactionService {
 
   // Method to fetch user transactions
   getTransactions(): Observable<Transaction[]> {
-    // Hardcoded userId=1 for testing
-    return this.http.get<Transaction[]>(`${this.baseUrl}?userId=1`);
+    const userId = localStorage.getItem('userId'); // Fetch the logged-in user's ID
+    if (!userId) {
+      throw new Error('User is not logged in');
+    }
+
+    // Fetch transactions for the logged-in user
+    return this.http.get<Transaction[]>(`${this.baseUrl}?userId=${userId}`);
   }
 }

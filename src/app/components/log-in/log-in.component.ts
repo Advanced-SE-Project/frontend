@@ -37,7 +37,7 @@ export class LoginComponent {
       next: (response: any) => {
         alert('Login successful!');
         // Save token (when implemented in the backend)
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.user_id); // Store the userId temporarily
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
