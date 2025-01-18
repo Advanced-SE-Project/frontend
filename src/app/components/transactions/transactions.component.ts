@@ -44,8 +44,8 @@ export class TransactionsComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
 
-  receiveCategories = ['Salary', 'Investments', 'Gifts', 'Refunds'];
-  spentCategories = ['Groceries', 'Entertainment', 'Utilities', 'Rent'];
+  receiveCategories = ['Salary', 'Investments', 'Gifts', 'Refunds', 'Other'];
+  spentCategories = ['Groceries', 'Entertainment', 'Utilities', 'Rent', 'Other'];
   filteredCategories: string[] = [];
 
   constructor(
