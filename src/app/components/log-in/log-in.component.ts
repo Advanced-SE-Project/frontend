@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,15 +27,23 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
   user = { username: '', password: '' };
 
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login() {
-    console.log('User logged in:', this.user);
-    this.router.navigate(['/dashboard']);
-  }
-
-  logout() {
-    console.log('User logged out');
-    this.router.navigate(['/about']);
+    this.http.post('http://localhost:5000/api/auth/login', {
+      username: this.user.username,
+      password: this.user.password
+    }).subscribe({
+      next: (response: any) => {
+        alert('Login successful!');
+        // Save token (when implemented in the backend)
+        localStorage.setItem('token', response.token);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Invalid username or password. Please try again.');
+      }
+    });
   }
 }
