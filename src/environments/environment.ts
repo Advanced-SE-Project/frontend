@@ -1,5 +1,4 @@
 export const environment = {
-    production: false,
-    apiUrl: 'https://api.example.com',
-  };
-  
+  production: false,
+  apiBaseUrl: 'http://localhost:5000/api/auth'
+};
