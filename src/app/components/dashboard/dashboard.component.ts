@@ -5,6 +5,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { TransactionService } from '../../services/transaction.service';
+import { Transaction } from '../../models/transaction.model';
 
 @Component({
     selector: 'app-dashboard',
@@ -20,38 +21,32 @@ import { TransactionService } from '../../services/transaction.service';
     styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-    currentBalance: number = 0; // Define the current balance
-    receivedTransactions: any[] = []; // Define the received transactions array
-    spentTransactions: any[] = []; // Define the spent transactions array
-  
-    constructor(private transactionService: TransactionService) {}
-  
-    ngOnInit(): void {
-      this.fetchUserBalance();
-      this.fetchTransactionHistory();
-    }
-  
-    fetchUserBalance(): void {
-      this.transactionService.getUserBalance().subscribe({
-        next: (balance: number) => {
-          this.currentBalance = balance; // Assign fetched balance
-        },
-        error: (err) => {
-          console.error('Error fetching balance:', err.message);
-        }
-      });
-    }
-  
-    fetchTransactionHistory(): void {
-      this.transactionService.getTransactions().subscribe({
-        next: (transactions: any[]) => {
-          // Filter transactions into received and spent
-          this.receivedTransactions = transactions.filter(t => t.type === 'receive');
-          this.spentTransactions = transactions.filter(t => t.type === 'spend');
-        },
-        error: (err) => {
-          console.error('Error fetching transactions:', err.message);
-        }
-      });
-    }
+  currentBalance: number = 0; // Dynamically calculated balance
+  receivedTransactions: Transaction[] = []; // Transactions of type 'receive'
+  spentTransactions: Transaction[] = []; // Transactions of type 'spent'
+
+  constructor(private transactionService: TransactionService) {}
+
+  ngOnInit(): void {
+    this.loadTransactions();
   }
+
+  private loadTransactions(): void {
+    this.transactionService.getTransactions().subscribe({
+      next: (transactions) => {
+        // Categorize transactions by type
+        this.receivedTransactions = transactions.filter((t) => t.type === 'receive');
+        this.spentTransactions = transactions.filter((t) => t.type === 'spent');
+
+        // Calculate the balance
+        const totalReceived = this.receivedTransactions.reduce((sum, t) => sum + t.amount, 0);
+        const totalSpent = this.spentTransactions.reduce((sum, t) => sum + t.amount, 0);
+
+        this.currentBalance = totalReceived - totalSpent;
+      },
+      error: (err) => {
+        console.error('Error fetching transactions:', err);
+      },
+    });
+  }
+}

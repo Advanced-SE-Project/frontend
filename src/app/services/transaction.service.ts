@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Transaction } from '../models/transaction.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class TransactionService {
   }
 
   // Method to fetch user transactions
-  getTransactions(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/history`);
+  getTransactions(): Observable<Transaction[]> {
+    // Hardcoded userId=1 for testing
+    return this.http.get<Transaction[]>(`${this.baseUrl}?userId=1`);
   }
 }
