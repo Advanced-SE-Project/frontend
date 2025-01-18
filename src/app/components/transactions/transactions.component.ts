@@ -15,6 +15,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-transactions',
@@ -41,8 +42,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 export class TransactionsComponent implements OnInit {
   transactionForm: FormGroup;
   successMessage: string = '';
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private transactionService: TransactionService) {
+  constructor(
+    private fb: FormBuilder,
+    private transactionService: TransactionService,
+    private authService: AuthService // Inject AuthService here
+  ) {
     this.transactionForm = this.fb.group({
       date: ['', Validators.required],
       type: ['', Validators.required],
@@ -54,30 +60,44 @@ export class TransactionsComponent implements OnInit {
   ngOnInit(): void {}
 
   createTransaction(): void {
+    console.log('createTransaction() triggered'); // Debug log
+    console.log('Form validity:', this.transactionForm.valid); // Debug log
+    console.log('Form value:', this.transactionForm.value); // Debug log
+
     if (this.transactionForm.valid) {
       const transactionData = this.transactionForm.value;
   
+      // Format the date as YYYY-MM-DD
       const rawDate: Date = transactionData.date;
+      transactionData.date = rawDate.toISOString().split('T')[0];
   
-      const day = String(rawDate.getDate()).padStart(2, '0');
-      const month = String(rawDate.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
-      const year = rawDate.getFullYear();
-      const formattedDate = `${day}-${month}-${year}`;
+      // Dynamically fetch the userId
+      const userId = this.authService.getUserId();
+      if (!userId) {
+        this.errorMessage = 'User ID not found. Please log in again.';
+        console.error(this.errorMessage); // Debug log
+        return;
+      }
   
-      transactionData.date = formattedDate;
+      transactionData.userId = userId;
   
-      // For now, add a hardcoded userId
-      transactionData.userId = 1;
+      console.log('Transaction data being sent:', transactionData); // Debug log
   
+      // Send transaction to the backend
       this.transactionService.createTransaction(transactionData).subscribe({
         next: () => {
           this.successMessage = 'Transaction saved successfully!';
           this.transactionForm.reset();
+          this.errorMessage = '';
         },
         error: (err: HttpErrorResponse) => {
           console.error('Error saving transaction:', err.message);
+          this.errorMessage = 'Failed to save transaction. Please try again.';
         },
       });
+    } else {
+      this.errorMessage = 'Please fill out all fields correctly.';
     }
-  }  
+  }
+  
 }

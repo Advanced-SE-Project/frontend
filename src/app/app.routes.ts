@@ -42,7 +42,7 @@ export const routes: Routes = [
   {
     path: 'log-in',
     loadComponent: () =>
-      import('./components/log-in/log-in.component').then((m) => m.LoginComponent),
+      import('./components/log-in/log-in.component').then((m) => m.LogInComponent),
   },
   {
     path: 'create-account',

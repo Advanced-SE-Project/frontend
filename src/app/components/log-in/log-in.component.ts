@@ -24,26 +24,28 @@ import { AuthService } from '../../services/auth.service';
     styleUrl: './log-in.component.scss'
 })
 
-export class LoginComponent {
+export class LogInComponent {
   user = { username: '', password: '' };
+  errorMessage = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login() {
-    this.http.post('http://localhost:5000/api/auth/login', {
-      username: this.user.username,
-      password: this.user.password
-    }).subscribe({
-      next: (response: any) => {
-        alert('Login successful!');
-        // Save token (when implemented in the backend)
-        localStorage.setItem('userId', response.user_id); // Store the userId temporarily
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Invalid username or password. Please try again.');
-      }
-    });
+  login(): void {
+    this.http
+      .post<{ access_token: string }>('http://localhost:5000/api/auth/login', {
+        username: this.user.username,
+        password: this.user.password,
+      })
+      .subscribe({
+        next: (response) => {
+          localStorage.setItem('jwt_token', response.access_token);
+          alert('Login successful!');
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          console.error(err);
+          this.errorMessage = 'Invalid username or password';
+        },
+      });
   }
 }

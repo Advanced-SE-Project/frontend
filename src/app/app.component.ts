@@ -8,7 +8,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   imports: [
     RouterModule,
     SidebarComponent,
-    // Add other modules if needed
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
