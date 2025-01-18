@@ -20,9 +20,9 @@
         <mat-list>
           <mat-list-item *ngFor="let transaction of receivedTransactions">
             <mat-icon matListIcon color="primary">call_received</mat-icon>
-            <div matLine>
+            <span>
               {{ transaction.date }} - {{ transaction.amount | currency: 'EUR' }}
-            </div>
+            </span>
           </mat-list-item>
         </mat-list>
       </div>
@@ -33,9 +33,9 @@
         <mat-list>
           <mat-list-item *ngFor="let transaction of spentTransactions">
             <mat-icon matListIcon color="warn">call_made</mat-icon>
-            <div matLine>
+            <span>
               {{ transaction.date }} - {{ transaction.amount | currency: 'EUR' }}
-            </div>
+            </span>
           </mat-list-item>
         </mat-list>
       </div>
