@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:5000/api/auth'
+  apiBaseUrl: 'http://localhost:2000', // API Gateway
 };

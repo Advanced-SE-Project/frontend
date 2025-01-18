@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { TransactionService } from '../../services/transaction.service';
 import { Transaction } from '../../models/transaction.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -24,29 +25,41 @@ export class DashboardComponent implements OnInit {
   currentBalance: number = 0; // Dynamically calculated balance
   receivedTransactions: Transaction[] = []; // Transactions of type 'receive'
   spentTransactions: Transaction[] = []; // Transactions of type 'spent'
+  errorMessage: string = ''; // Error message if transactions fail to load
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(
+    private transactionService: TransactionService,
+    private authService: AuthService // Inject AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadTransactions();
   }
 
   private loadTransactions(): void {
-    this.transactionService.getTransactions().subscribe({
+    // Retrieve userId from AuthService
+    const userId = this.authService.getUserId();
+    console.log('Fetched userId:', userId); // Debug log
+
+    if (!userId) {
+      this.errorMessage = 'User ID not found. Please log in again.';
+      console.error(this.errorMessage); // Debug log
+      return;
+    }
+
+    // Fetch transactions for the logged-in user
+    this.transactionService.getTransactions(userId).subscribe({
       next: (transactions) => {
-        // Categorize transactions by type
+        console.log('Fetched transactions:', transactions); // Debug log
         this.receivedTransactions = transactions.filter((t) => t.type === 'receive');
         this.spentTransactions = transactions.filter((t) => t.type === 'spent');
-
-        // Calculate the balance
         const totalReceived = this.receivedTransactions.reduce((sum, t) => sum + t.amount, 0);
         const totalSpent = this.spentTransactions.reduce((sum, t) => sum + t.amount, 0);
-
         this.currentBalance = totalReceived - totalSpent;
       },
       error: (err) => {
         console.error('Error fetching transactions:', err);
-        alert('Failed to fetch transactions. Please log in again.');
+        this.errorMessage = 'Failed to fetch transactions. Please try again.';
       },
     });
   }

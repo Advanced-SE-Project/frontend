@@ -2,12 +2,32 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { jwtDecode } from "jwt-decode";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private tokenKey = 'jwt_token';
+  private baseUrl = `${environment.apiBaseUrl}/user-auth-service`;
+
+  constructor(private http: HttpClient) {}
+
+  login(credentials: { username: string; password: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login`, credentials);
+  }
+
+  register(user: { username: string; password: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, user);
+  }
+
+  validateToken(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/validate`, {
+      headers: {
+        Authorization: `Bearer ${this.getToken()}`,
+      },
+    });
+  }
 
   saveToken(token: string): void {
     console.log('Saving token to localStorage:', token); // Debug log
