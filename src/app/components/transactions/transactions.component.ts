@@ -44,6 +44,10 @@ export class TransactionsComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
 
+  receiveCategories = ['Salary', 'Investments', 'Gifts', 'Refunds'];
+  spentCategories = ['Groceries', 'Entertainment', 'Utilities', 'Rent'];
+  filteredCategories: string[] = [];
+
   constructor(
     private fb: FormBuilder,
     private transactionService: TransactionService,
@@ -57,7 +61,21 @@ export class TransactionsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Listen for changes in the "type" field to update category options
+    this.transactionForm.get('type')?.valueChanges.subscribe((type: string) => {
+      if (type === 'receive') {
+        this.filteredCategories = this.receiveCategories;
+      } else if (type === 'spent') {
+        this.filteredCategories = this.spentCategories;
+      } else {
+        this.filteredCategories = [];
+      }
+
+      // Reset category field when type changes
+      this.transactionForm.get('category')?.reset();
+    });
+  }
 
   createTransaction(): void {
     console.log('createTransaction() triggered'); // Debug log

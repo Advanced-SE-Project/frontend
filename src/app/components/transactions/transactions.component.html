@@ -51,20 +51,8 @@
           <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
             <mat-select formControlName="category" required>
-              <mat-option value="Groceries">
-                <mat-icon>shopping_cart</mat-icon> Groceries
-              </mat-option>
-              <mat-option value="Salary">
-                <mat-icon>account_balance_wallet</mat-icon> Salary
-              </mat-option>
-              <mat-option value="Entertainment">
-                <mat-icon>movie</mat-icon> Entertainment
-              </mat-option>
-              <mat-option value="Utilities">
-                <mat-icon>lightbulb</mat-icon> Utilities
-              </mat-option>
-              <mat-option value="Rent">
-                <mat-icon>home</mat-icon> Rent
+              <mat-option *ngFor="let category of filteredCategories" [value]="category">
+                {{ category }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="transactionForm.get('category')?.hasError('required')">
