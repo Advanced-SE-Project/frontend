@@ -13,4 +13,14 @@ export class TransactionService {
   createTransaction(transaction: any): Observable<any> {
     return this.http.post(this.baseUrl, transaction);
   }
+
+  // Method to fetch user balance
+  getUserBalance(): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/balance`);
+  }
+
+  // Method to fetch user transactions
+  getTransactions(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/history`);
+  }
 }
