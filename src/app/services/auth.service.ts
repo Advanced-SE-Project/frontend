@@ -9,20 +9,20 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private tokenKey = 'jwt_token';
-  private baseUrl = `${environment.apiBaseUrl}/user-auth-service`;
+  private baseUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, credentials);
+    return this.http.post(`${this.baseUrl}/auth-service/api/auth/login`, credentials);
   }
 
   register(user: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, user);
+    return this.http.post(`${this.baseUrl}/auth-service/api/auth/register`, user);
   }
 
   validateToken(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/validate`, {
+    return this.http.get(`${this.baseUrl}/auth-service/api/auth/validate`, {
       headers: {
         Authorization: `Bearer ${this.getToken()}`,
       },

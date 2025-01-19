@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -28,24 +27,19 @@ export class LogInComponent {
   user = { username: '', password: '' };
   errorMessage = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   login(): void {
-    this.http
-      .post<{ access_token: string }>('http://localhost:5000/api/auth/login', {
-        username: this.user.username,
-        password: this.user.password,
-      })
-      .subscribe({
-        next: (response) => {
-          localStorage.setItem('jwt_token', response.access_token);
-          alert('Login successful!');
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          console.error(err);
-          this.errorMessage = 'Invalid username or password';
-        },
-      });
+    this.authService.login(this.user).subscribe({
+      next: (response) => {
+        this.authService.saveToken(response.access_token);
+        alert('Login successful!');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        console.error('Login failed:', err);
+        this.errorMessage = err.error.message || 'Login failed';
+    },
+    });
   }
 }
