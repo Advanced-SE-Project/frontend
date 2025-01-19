@@ -32,7 +32,7 @@ export class LogInComponent {
 
   login(): void {
     this.http
-      .post<{ access_token: string }>('http://localhost:5000/api/auth/login', {
+      .post<{ access_token: string }>('http://localhost:2000/auth-service/api/auth/login', {
         username: this.user.username,
         password: this.user.password,
       })

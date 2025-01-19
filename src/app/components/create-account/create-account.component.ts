@@ -36,7 +36,7 @@ export class CreateAccountComponent {
     }
 
     this.http
-      .post<{ access_token: string }>('http://localhost:5000/api/auth/register', {
+      .post<{ access_token: string }>('http://localhost:2000/auth-service/api/auth/register', {
         username: this.user.username,
         password: this.user.password,
         password_confirm: this.user.confirmPassword,
