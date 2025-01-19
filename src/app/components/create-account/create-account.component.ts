@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../services/user.service';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-create-account',
@@ -27,7 +26,7 @@ export class CreateAccountComponent {
   user = { username: '', password: '', confirmPassword: '' };
   errorMessage = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   createAccount(): void {
     if (this.user.password !== this.user.confirmPassword) {
@@ -35,21 +34,18 @@ export class CreateAccountComponent {
       return;
     }
 
-    this.http
-      .post<{ access_token: string }>('http://localhost:5000/api/auth/register', {
-        username: this.user.username,
-        password: this.user.password,
-        password_confirm: this.user.confirmPassword,
-      })
-      .subscribe({
-        next: (response) => {
-          alert('Account created successfully!');
-          this.router.navigate(['/log-in']);
-        },
-        error: (err) => {
-          console.error(err);
-          this.errorMessage = err.error.message || 'Registration failed';
-        },
-      });
+    this.userService.register({
+      username: this.user.username,
+      password: this.user.password,
+    }).subscribe({
+      next: () => {
+        alert('Account created successfully!');
+        this.router.navigate(['/log-in']);
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = err.error.message || 'Registration failed';
+      },
+    });
   }
 }
