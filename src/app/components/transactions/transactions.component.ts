@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { TransactionService } from '../../services/transaction.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SidebarComponent } from '../sidebar/sidebar.component';
