@@ -4,66 +4,84 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
+import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
-    selector: 'app-analytics',
-    standalone: true,
-    imports: [
-        CommonModule,
-        RouterModule,
-        SidebarComponent,
-        BaseChartDirective,
-    ],
-    templateUrl: './analytics.component.html',
-    styleUrl: './analytics.component.scss'
+  selector: 'app-analytics',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    SidebarComponent,
+    BaseChartDirective,
+  ],
+  templateUrl: './analytics.component.html',
+  styleUrl: './analytics.component.scss'
 })
 export class AnalyticsComponent {
-  // Line chart data, options, and configuration
-  public lineChartData: ChartData<'line'> = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Income' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Expenses' }
-    ]
-  };
+  constructor(private analyticsService: AnalyticsService) { }
 
-  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  public lineChartOptions: ChartOptions<'line'> = {
+
+  // Line chart
+  public incomeAndExpenseLineChartData: ChartData<'line'> = {
+    labels: [],
+    datasets: []
+  };
+  public incomeAndExpenseLineChartOptions: ChartOptions<'line'> = {
     responsive: true,
   };
-  public lineChartLegend = true;
-  public lineChartType: string = 'line'; // Define the chart type
+  public incomeAndExpenseLineChartLegend = true;
+  public incomeAndExpenseLineChartType = 'line';
 
   // Bar Chart
-  public barChartData: ChartData<'bar'> = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    datasets: [{ data: [12, 19, 3, 5, 2, 3], label: 'Sales' }]
+  public expensesInCategoryBarChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: []
   };
-  public barChartOptions: ChartOptions<'bar'> = { responsive: true };
-  public barChartType = 'bar';
-  public barChartLegend = true;
+  public expensesInCategoryBarChartOptions: ChartOptions<'bar'> = { responsive: true };
+  public expensesInCategoryBarChartType = 'bar';
+  public expensesInCategoryBarChartLegend = true;
 
   // Pie Chart
-  public pieChartData: ChartData<'pie'> = {
-    labels: ['Food', 'Entertainment', 'Rent', 'Utilities'],
-    datasets: [{ data: [300, 50, 100, 40] }]
+  public expenseCategoriesPieChartData: ChartData<'pie'> = {
+    labels: [],
+    datasets: []
   };
-  public pieChartOptions: ChartOptions<'pie'> = { responsive: true };
-  public pieChartType = 'pie';
-  public pieChartLegend = true;
+  public expenseCategoriesPieChartOptions: ChartOptions<'pie'> = { responsive: true };
+  public expenseCategoriesPieChartLegend = true;
 
   // Doughnut Chart
-  public doughnutChartData: ChartData<'doughnut'> = {
-    labels: ['Housing', 'Transportation', 'Food', 'Savings'],
-    datasets: [
-      { data: [40, 20, 20, 20], backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'] }
-    ]
+  public incomeCategoriesPieChartData: ChartData<'pie'> = {
+    labels: [],
+    datasets: []
   };
-
-  public doughnutChartOptions: ChartOptions<'doughnut'> = {
+  public incomeCategoriesPieChartOptions: ChartOptions<'pie'> = {
     responsive: true,
   };
+  public incomeCategoriesPieChartType = 'pie';
+  public incomeCategoriesPieChartLegend = true;
 
-  public doughnutChartType = 'doughnut';
-  public doughnutChartLegend = true;
+  ngOnInit(): void {
+    this.fetchBarChartData();
+  }
+  fetchBarChartData() {
+    const userId = 1;
+    const startMonth = '01-2025';
+    const endMonth = '12-2025';
+    const type = 'Expense';
+    const category = 'Groceries';
+
+    this.analyticsService.getBarChart(userId, startMonth, endMonth, type, category).subscribe((data) => {
+      this.expensesInCategoryBarChartData = data;
+    });
+    this.analyticsService.getLineChart(userId, startMonth, endMonth).subscribe((data) => {
+      this.incomeAndExpenseLineChartData = data;
+    });
+    this.analyticsService.getExpensePie(userId, startMonth, endMonth).subscribe((data) => {
+      this.expenseCategoriesPieChartData = data;
+    });
+    this.analyticsService.getIncomePie(userId, startMonth, endMonth).subscribe((data) => {
+      this.incomeCategoriesPieChartData = data;
+    });
+  }
 }

@@ -5,45 +5,45 @@
     
     <!-- Line Chart -->
     <div class="chart-section">
-      <h2>Income and Expenses (Line Chart)</h2>
+      <h2>Income and Expenses</h2>
       <canvas baseChart
-        [data]="lineChartData"
-        [options]="lineChartOptions"
-        [legend]="lineChartLegend"
+        [data]="incomeAndExpenseLineChartData"
+        [options]="incomeAndExpenseLineChartOptions"
+        [legend]="incomeAndExpenseLineChartLegend"
         [type]="'line'">
       </canvas>
     </div>
   
     <!-- Bar Chart -->
     <div class="chart-section">
-      <h2>Monthly Sales (Bar Chart)</h2>
+      <h2>Expenses in Category</h2>
       <canvas baseChart
-        [data]="barChartData"
-        [options]="barChartOptions"
-        [legend]="barChartLegend"
+        [data]="expensesInCategoryBarChartData"
+        [options]="expensesInCategoryBarChartOptions"
+        [legend]="expensesInCategoryBarChartLegend"
         [type]="'bar'">
       </canvas>
     </div>
   
     <!-- Pie Chart -->
     <div class="chart-section">
-      <h2>Expense Categories (Pie Chart)</h2>
+      <h2>Expense Categories</h2>
       <canvas baseChart
-        [data]="pieChartData"
-        [options]="pieChartOptions"
-        [legend]="pieChartLegend"
+        [data]="expenseCategoriesPieChartData"
+        [options]="expenseCategoriesPieChartOptions"
+        [legend]="expenseCategoriesPieChartLegend"
         [type]="'pie'">
       </canvas>
     </div>
     
     <!-- Doughnut Chart -->
     <div class="chart-section">
-      <h2>Spending Breakdown (Doughnut Chart)</h2>
+      <h2>Income Categories</h2>
       <canvas baseChart
-        [data]="doughnutChartData"
-        [options]="doughnutChartOptions"
-        [legend]="doughnutChartLegend"
-        [type]="'doughnut'">
+        [data]="incomeCategoriesPieChartData"
+        [options]="incomeCategoriesPieChartOptions"
+        [legend]="incomeCategoriesPieChartLegend"
+        [type]="'pie'">
       </canvas>
     </div>
   </div>
