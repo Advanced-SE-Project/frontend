@@ -2,48 +2,49 @@
   <app-sidebar></app-sidebar>
 
   <div class="analytics-content">
-    
+    <!-- Date Range Selector Row -->
+    <div class="row card-row">
+      <div class="card-section">
+        <div class="date-range-card">
+          <label for="startMonth">Start Month:</label>
+          <input id="startMonth" type="month" [(ngModel)]="startMonth" (change)="onDateRangeChange()" />
+          <label for="endMonth">End Month:</label>
+          <input id="endMonth" type="month" [(ngModel)]="endMonth" (change)="onDateRangeChange()" />
+        </div>
+      </div>
+    </div>
+
     <!-- Line Chart -->
     <div class="chart-section">
-      <h2>Income and Expenses (Line Chart)</h2>
-      <canvas baseChart
-        [data]="lineChartData"
-        [options]="lineChartOptions"
-        [legend]="lineChartLegend"
-        [type]="'line'">
+      <h2>Income and Expenses</h2>
+      <canvas baseChart [data]="incomeAndExpenseLineChartData" [options]="incomeAndExpenseLineChartOptions" [type]="'line'">
       </canvas>
     </div>
-  
+
     <!-- Bar Chart -->
     <div class="chart-section">
-      <h2>Monthly Sales (Bar Chart)</h2>
-      <canvas baseChart
-        [data]="barChartData"
-        [options]="barChartOptions"
-        [legend]="barChartLegend"
-        [type]="'bar'">
+      <h2>Expenses in Category</h2>
+      <div class="category-dropdown">
+        <label for="categorySelect">Select Category:</label>
+        <select id="categorySelect" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
+      <canvas baseChart [data]="expensesInCategoryBarChartData" [options]="expensesInCategoryBarChartOptions" [type]="'bar'">
       </canvas>
     </div>
-  
+
     <!-- Pie Chart -->
     <div class="chart-section">
-      <h2>Expense Categories (Pie Chart)</h2>
-      <canvas baseChart
-        [data]="pieChartData"
-        [options]="pieChartOptions"
-        [legend]="pieChartLegend"
-        [type]="'pie'">
+      <h2>Expense Categories</h2>
+      <canvas baseChart [data]="expenseCategoriesPieChartData" [options]="expenseCategoriesPieChartOptions" [type]="'pie'">
       </canvas>
     </div>
-    
+
     <!-- Doughnut Chart -->
     <div class="chart-section">
-      <h2>Spending Breakdown (Doughnut Chart)</h2>
-      <canvas baseChart
-        [data]="doughnutChartData"
-        [options]="doughnutChartOptions"
-        [legend]="doughnutChartLegend"
-        [type]="'doughnut'">
+      <h2>Income Categories</h2>
+      <canvas baseChart [data]="incomeCategoriesPieChartData" [options]="incomeCategoriesPieChartOptions" [type]="'pie'">
       </canvas>
     </div>
   </div>
