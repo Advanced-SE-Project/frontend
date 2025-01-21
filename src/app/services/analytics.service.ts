@@ -6,122 +6,135 @@ import { AuthService } from '../services/auth.service';
 import { ChartData } from 'chart.js';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class AnalyticsService {
-    private baseUrl = `${environment.apiBaseUrl}/analytics-service/analytics`;
+  private baseUrl = `${environment.apiBaseUrl}/analytics-service/analytics`;
+  private userId: number | null = null;
+  private type = 'Expense'; //Currently we only want to use Expenses
 
-    constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService) {
+    this.userId = this.authService.getUserId();
+  }
 
-    private getAuthHeaders(): HttpHeaders {
-        const token = this.authService.getToken();
-        return new HttpHeaders({
-            Authorization: `Bearer ${token}`,
-        });
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
+  private ensureUserId(): number {
+    if (!this.userId) {
+      throw new Error('User ID is not available. Ensure user is logged in.');
     }
+    return this.userId;
+  }
 
-    getLineChart(userId: number, startMonth: string, endMonth: string): Observable<ChartData<'line'>> {
-        const params = new HttpParams()
-            .set('userId', userId.toString())
-            .set('startMonth', startMonth)
-            .set('endMonth', endMonth);
+  getLineChart(startMonth: string, endMonth: string): Observable<ChartData<'line'>> {
+    const userId = this.ensureUserId();
+    const params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('startMonth', startMonth)
+      .set('endMonth', endMonth);
 
-        return this.http.get<{
-            expenseData: number[];
-            incomeData: number[];
-            labels: string[];
-        }>(`${this.baseUrl}/line`, {
-            headers: this.getAuthHeaders(),
-            params,
-        }).pipe(
-            map(response => ({
-                labels: response.labels,
-                datasets: [
-                    { data: response.incomeData, label: 'Income' },
-                    { data: response.expenseData, label: 'Expenses' }
-                ]
-            }))
-        );
-    }
+    return this.http.get<{
+      expenseData: number[];
+      incomeData: number[];
+      labels: string[];
+    }>(`${this.baseUrl}/line`, {
+      headers: this.getAuthHeaders(),
+      params,
+    }).pipe(
+      map(response => ({
+        labels: response.labels,
+        datasets: [
+          { data: response.incomeData, label: 'Income' },
+          { data: response.expenseData, label: 'Expenses' }
+        ]
+      }))
+    );
+  }
 
-    getExpensePie(userId: number, startMonth: string, endMonth: string): Observable<ChartData<'pie'>> {
-        const params = new HttpParams()
-          .set('userId', userId.toString())
-          .set('startMonth', startMonth)
-          .set('endMonth', endMonth);
-    
-        return this.http.get<{
-          data: number[];
-          labels: string[];
-        }>(`${this.baseUrl}/pie/expense`, {
-          headers: this.getAuthHeaders(),
-          params,
-        }).pipe(
-          map(response => ({
-            labels: response.labels,
-            datasets: [
-              { data: response.data }
-            ]
-          }))
-        );
-      }
+  getExpensePie(startMonth: string, endMonth: string): Observable<ChartData<'pie'>> {
+    const userId = this.ensureUserId();
+    const params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('startMonth', startMonth)
+      .set('endMonth', endMonth);
 
-    getIncomePie(userId: number, startMonth: string, endMonth: string): Observable<any> {
-        const params = new HttpParams()
-            .set('userId', userId.toString())
-            .set('startMonth', startMonth)
-            .set('endMonth', endMonth);
+    return this.http.get<{
+      data: number[];
+      labels: string[];
+    }>(`${this.baseUrl}/pie/expense`, {
+      headers: this.getAuthHeaders(),
+      params,
+    }).pipe(
+      map(response => ({
+        labels: response.labels,
+        datasets: [
+          { data: response.data }
+        ]
+      }))
+    );
+  }
 
-            return this.http.get<{
-                data: number[];
-                labels: string[];
-              }>(`${this.baseUrl}/pie/income`, {
-                headers: this.getAuthHeaders(),
-                params,
-              }).pipe(
-                map(response => ({
-                  labels: response.labels,
-                  datasets: [
-                    { data: response.data }
-                  ]
-                }))
-              );
-    }
+  getIncomePie(startMonth: string, endMonth: string): Observable<any> {
+    const userId = this.ensureUserId();
+    const params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('startMonth', startMonth)
+      .set('endMonth', endMonth);
 
-    getBarChart(
-        userId: number,
-        startMonth: string,
-        endMonth: string,
-        type: string,
-        category: string
-    ): Observable<ChartData<'bar'>> {
-        const params = new HttpParams()
-            .set('userId', userId.toString())
-            .set('startMonth', startMonth)
-            .set('endMonth', endMonth)
-            .set('type', type)
-            .set('category', category);
+    return this.http.get<{
+      data: number[];
+      labels: string[];
+    }>(`${this.baseUrl}/pie/income`, {
+      headers: this.getAuthHeaders(),
+      params,
+    }).pipe(
+      map(response => ({
+        labels: response.labels,
+        datasets: [
+          { data: response.data }
+        ]
+      }))
+    );
+  }
 
-        return this.http.get<{ data: number[]; labels: string[] }>(`${this.baseUrl}/bar`, {
-            headers: this.getAuthHeaders(),
-            params,
-        }).pipe(
-            map(response => ({
-                labels: response.labels,
-                datasets: [
-                    { data: response.data, label: `${type} - ${category}` }
-                ]
-            }))
-        );
-    }
+  getBarChart(
+    startMonth: string,
+    endMonth: string,
+    category: string
+  ): Observable<ChartData<'bar'>> {
+    const userId = this.ensureUserId();
+    const params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('startMonth', startMonth)
+      .set('endMonth', endMonth)
+      .set('type', this.type)
+      .set('category', category);
+
+    return this.http.get<{ data: number[]; labels: string[] }>(`${this.baseUrl}/bar`, {
+      headers: this.getAuthHeaders(),
+      params,
+    }).pipe(
+      map(response => ({
+        labels: response.labels,
+        datasets: [
+          { data: response.data, label: `${category}` }
+        ]
+      }))
+    );
+  }
 
 
-    getAllChartData(userId: number, startMonth: string, endMonth: string, type: string, selectedCategory: string) {
-      return forkJoin({
-        barChart: this.getBarChart(userId, startMonth, endMonth, type, selectedCategory),
-        lineChart: this.getLineChart(userId, startMonth, endMonth),
-        expensePie: this.getExpensePie(userId, startMonth, endMonth),
-        incomePie: this.getIncomePie(userId, startMonth, endMonth)
-      });
-    }
+  getAllChartData(startMonth: string, endMonth: string, selectedCategory: string) {
+    return forkJoin({
+      barChart: this.getBarChart(startMonth, endMonth, selectedCategory),
+      lineChart: this.getLineChart(startMonth, endMonth),
+      expensePie: this.getExpensePie(startMonth, endMonth),
+      incomePie: this.getIncomePie(startMonth, endMonth)
+    });
+  }
 }

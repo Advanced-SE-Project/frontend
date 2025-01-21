@@ -29,8 +29,6 @@ export class AnalyticsComponent {
   startMonth: string = '2025-01'; // Default start month
   endMonth: string = '2025-12';   // Default end month
   selectedCategory: string = 'Groceries'; // Default selected category
-  userId = 1;
-  type = 'Expense';
   categories: string[] = []; // List of categories
 
   // Chart Data
@@ -57,7 +55,7 @@ export class AnalyticsComponent {
   }
 
   fetchBarChartData() {
-    this.analyticsService.getAllChartData(this.userId, this.startMonth, this.endMonth, this.type, this.selectedCategory).subscribe(data => {
+    this.analyticsService.getAllChartData(this.startMonth, this.endMonth, this.selectedCategory).subscribe(data => {
       this.expensesInCategoryBarChartData = data.barChart;
       this.incomeAndExpenseLineChartData = data.lineChart;
       this.expenseCategoriesPieChartData = data.expensePie;
@@ -76,7 +74,7 @@ export class AnalyticsComponent {
   }
 
   onCategoryChange(): void {
-    this.analyticsService.getBarChart(this.userId, this.startMonth, this.endMonth, this.type, this.selectedCategory).subscribe((data) => {
+    this.analyticsService.getBarChart(this.startMonth, this.endMonth, this.selectedCategory).subscribe((data) => {
       this.expensesInCategoryBarChartData = data;
     });
   }
