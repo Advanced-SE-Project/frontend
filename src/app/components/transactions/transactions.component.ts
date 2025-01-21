@@ -81,7 +81,7 @@ export class TransactionsComponent implements OnInit {
     console.log('createTransaction() triggered'); // Debug log
     console.log('Form validity:', this.transactionForm.valid); // Debug log
     console.log('Form value:', this.transactionForm.value); // Debug log
-
+  
     if (this.transactionForm.valid) {
       const transactionData = this.transactionForm.value;
   
@@ -105,8 +105,18 @@ export class TransactionsComponent implements OnInit {
       this.transactionService.createTransaction(transactionData).subscribe({
         next: () => {
           this.successMessage = 'Transaction saved successfully!';
-          this.transactionForm.reset();
           this.errorMessage = '';
+  
+          // Reset the form and clear validation styles
+          this.transactionForm.reset();
+          this.transactionForm.markAsPristine();
+          this.transactionForm.markAsUntouched();
+  
+          // Explicitly reset the validation state of each control
+          Object.keys(this.transactionForm.controls).forEach((controlName) => {
+            const control = this.transactionForm.get(controlName);
+            control?.setErrors(null);
+          });
         },
         error: (err: HttpErrorResponse) => {
           console.error('Error saving transaction:', err.message);
@@ -116,6 +126,6 @@ export class TransactionsComponent implements OnInit {
     } else {
       this.errorMessage = 'Please fill out all fields correctly.';
     }
-  }
+  }  
   
 }
