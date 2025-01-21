@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../services/auth.service';
 import { ChartData } from 'chart.js';
@@ -13,15 +13,13 @@ export class AnalyticsService {
 
     constructor(private http: HttpClient, private authService: AuthService) { }
 
-    // Helper method to create headers with Bearer Token
     private getAuthHeaders(): HttpHeaders {
-        const token = this.authService.getToken(); // Retrieve the token using AuthService
+        const token = this.authService.getToken();
         return new HttpHeaders({
             Authorization: `Bearer ${token}`,
         });
     }
 
-    // Fetch line chart data
     getLineChart(userId: number, startMonth: string, endMonth: string): Observable<ChartData<'line'>> {
         const params = new HttpParams()
             .set('userId', userId.toString())
@@ -46,7 +44,6 @@ export class AnalyticsService {
         );
     }
 
-    // Fetch expense pie chart data
     getExpensePie(userId: number, startMonth: string, endMonth: string): Observable<ChartData<'pie'>> {
         const params = new HttpParams()
           .set('userId', userId.toString())
@@ -69,7 +66,6 @@ export class AnalyticsService {
         );
       }
 
-    // Fetch income pie chart data
     getIncomePie(userId: number, startMonth: string, endMonth: string): Observable<any> {
         const params = new HttpParams()
             .set('userId', userId.toString())
@@ -92,7 +88,6 @@ export class AnalyticsService {
               );
     }
 
-    // Fetch bar chart data
     getBarChart(
         userId: number,
         startMonth: string,
@@ -118,5 +113,15 @@ export class AnalyticsService {
                 ]
             }))
         );
+    }
+
+
+    getAllChartData(userId: number, startMonth: string, endMonth: string, type: string, selectedCategory: string) {
+      return forkJoin({
+        barChart: this.getBarChart(userId, startMonth, endMonth, type, selectedCategory),
+        lineChart: this.getLineChart(userId, startMonth, endMonth),
+        expensePie: this.getExpensePie(userId, startMonth, endMonth),
+        incomePie: this.getIncomePie(userId, startMonth, endMonth)
+      });
     }
 }

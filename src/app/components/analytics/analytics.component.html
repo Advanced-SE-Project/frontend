@@ -17,8 +17,7 @@
     <!-- Line Chart -->
     <div class="chart-section">
       <h2>Income and Expenses</h2>
-      <canvas baseChart [data]="incomeAndExpenseLineChartData" [options]="incomeAndExpenseLineChartOptions"
-        [legend]="incomeAndExpenseLineChartLegend" [type]="'line'">
+      <canvas baseChart [data]="incomeAndExpenseLineChartData" [options]="incomeAndExpenseLineChartOptions" [type]="'line'">
       </canvas>
     </div>
 
@@ -31,24 +30,21 @@
           <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
         </select>
       </div>
-      <canvas baseChart [data]="expensesInCategoryBarChartData" [options]="expensesInCategoryBarChartOptions"
-        [legend]="expensesInCategoryBarChartLegend" [type]="'bar'">
+      <canvas baseChart [data]="expensesInCategoryBarChartData" [options]="expensesInCategoryBarChartOptions" [type]="'bar'">
       </canvas>
     </div>
 
     <!-- Pie Chart -->
     <div class="chart-section">
       <h2>Expense Categories</h2>
-      <canvas baseChart [data]="expenseCategoriesPieChartData" [options]="expenseCategoriesPieChartOptions"
-        [legend]="expenseCategoriesPieChartLegend" [type]="'pie'">
+      <canvas baseChart [data]="expenseCategoriesPieChartData" [options]="expenseCategoriesPieChartOptions" [type]="'pie'">
       </canvas>
     </div>
 
     <!-- Doughnut Chart -->
     <div class="chart-section">
       <h2>Income Categories</h2>
-      <canvas baseChart [data]="incomeCategoriesPieChartData" [options]="incomeCategoriesPieChartOptions"
-        [legend]="incomeCategoriesPieChartLegend" [type]="'pie'">
+      <canvas baseChart [data]="incomeCategoriesPieChartData" [options]="incomeCategoriesPieChartOptions" [type]="'pie'">
       </canvas>
     </div>
   </div>
