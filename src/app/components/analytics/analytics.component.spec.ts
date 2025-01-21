@@ -21,6 +21,11 @@ describe('AnalyticsComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should render the sidebar component', () => {
+    const sidebarElement = fixture.debugElement.nativeElement.querySelector('app-sidebar');
+    expect(sidebarElement).toBeTruthy();
+  });
+
   it('should call onDateRangeChange when the start month changes', () => {
     spyOn(component, 'onDateRangeChange');
     const startMonthInput = fixture.debugElement.query(By.css('#startMonth')).nativeElement;

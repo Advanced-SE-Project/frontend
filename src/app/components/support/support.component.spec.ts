@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SupportComponent } from './support.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 
 describe('SupportComponent', () => {
   let component: SupportComponent;
