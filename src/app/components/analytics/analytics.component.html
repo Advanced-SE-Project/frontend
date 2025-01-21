@@ -25,6 +25,12 @@
     <!-- Bar Chart -->
     <div class="chart-section">
       <h2>Expenses in Category</h2>
+      <div class="category-dropdown">
+        <label for="categorySelect">Select Category:</label>
+        <select id="categorySelect" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
       <canvas baseChart [data]="expensesInCategoryBarChartData" [options]="expensesInCategoryBarChartOptions"
         [legend]="expensesInCategoryBarChartLegend" [type]="'bar'">
       </canvas>

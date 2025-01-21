@@ -27,6 +27,10 @@ export class AnalyticsComponent {
   private dateRangeChange$: Subject<void> = new Subject<void>();
   startMonth: string = '2025-01'; // Default start month
   endMonth: string = '2025-12';   // Default end month
+  selectedCategory: string = 'Groceries'; // Default selected category
+  categories: string[] = []; // List of categories
+  userId = 1;
+  type = 'Expense';
 
   constructor(private analyticsService: AnalyticsService) {
     this.dateRangeChange$
@@ -34,7 +38,7 @@ export class AnalyticsComponent {
       .subscribe(() => {
         this.fetchBarChartData(); // Call your data-fetching logic here
       });
-   }
+  }
 
 
 
@@ -82,20 +86,19 @@ export class AnalyticsComponent {
   }
 
   fetchBarChartData() {
-    const userId = 1;
-    const type = 'Expense';
-    const category = 'Groceries';
-
-    this.analyticsService.getBarChart(userId, this.startMonth, this.endMonth, type, category).subscribe((data) => {
+    this.analyticsService.getBarChart(this.userId, this.startMonth, this.endMonth, this.type, this.selectedCategory).subscribe((data) => {
       this.expensesInCategoryBarChartData = data;
     });
-    this.analyticsService.getLineChart(userId, this.startMonth, this.endMonth).subscribe((data) => {
+    this.analyticsService.getLineChart(this.userId, this.startMonth, this.endMonth).subscribe((data) => {
       this.incomeAndExpenseLineChartData = data;
     });
-    this.analyticsService.getExpensePie(userId, this.startMonth, this.endMonth).subscribe((data) => {
+    this.analyticsService.getExpensePie(this.userId, this.startMonth, this.endMonth).subscribe((data) => {
       this.expenseCategoriesPieChartData = data;
+      if (data.labels) {
+        this.categories = data.labels?.map(l => l + "")
+      }
     });
-    this.analyticsService.getIncomePie(userId, this.startMonth, this.endMonth).subscribe((data) => {
+    this.analyticsService.getIncomePie(this.userId, this.startMonth, this.endMonth).subscribe((data) => {
       this.incomeCategoriesPieChartData = data;
     });
   }
@@ -103,8 +106,14 @@ export class AnalyticsComponent {
   onDateRangeChange(): void {
     const startYear = parseInt(this.startMonth.split('-')[0]);
     const endYear = parseInt(this.endMonth.split('-')[0]);
-    if(startYear > 1900 && endYear < 3000){
-      this.dateRangeChange$.next(); // Emit an event to trigger the debounced logic
+    if (startYear > 1900 && endYear < 3000) {
+      this.dateRangeChange$.next();
     }
+  }
+
+  onCategoryChange(): void {
+    this.analyticsService.getBarChart(this.userId, this.startMonth, this.endMonth, this.type, this.selectedCategory).subscribe((data) => {
+      this.expensesInCategoryBarChartData = data;
+    });
   }
 }
