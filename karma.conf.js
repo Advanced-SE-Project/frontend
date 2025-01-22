@@ -1,13 +1,26 @@
 module.exports = function (config) {
   config.set({
-    browsers: ['ChromeHeadless'], // Use headless Chrome
-    customLaunchers: {
-      ChromeHeadlessCI: {
-        base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-gpu', '--disable-extensions', '--disable-dev-shm-usage'],
-      },
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    plugins: [
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-coverage'),
+      require('@angular-devkit/build-angular/plugins/karma')
+    ],
+    client: {
+      jasmine: {},
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    singleRun: true, // Ensures Karma exits after tests
-    // other configurations...
+    coverageReporter: {
+      dir: require('path').join(__dirname, './coverage/frontend-app'),
+      subdir: '.',
+      reporters: [
+        { type: 'html' }, // This generates the HTML coverage report
+        { type: 'lcov' }  // This generates the lcov.info file
+      ]
+    },
+    browsers: ['ChromeHeadless'],
+    singleRun: true,
+    restartOnFileChange: true
   });
 };
