@@ -18,5 +18,5 @@ export const appConfig: ApplicationConfig = {
     },
     provideAnimations(),
     provideCharts(withDefaultRegisterables()),
-  ],
+    provideRouter(routes)  ],
 };
