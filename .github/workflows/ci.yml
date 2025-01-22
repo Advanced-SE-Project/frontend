@@ -38,37 +38,39 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Step 5a: Install Chrome dependencies
-      - name: Install Chrome dependencies
+      # Step 5: Install Chrome dependencies and Xvfb
+      - name: Install dependencies for Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y libnss3 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libatk-bridge2.0-0 libxrandr2 libgbm1 libgtk-3-0 xvfb
 
-      # Step 5b: Start Xvfb
+      # Step 6: Start virtual display server (Xvfb)
       - name: Start virtual display server
         run: |
           export DISPLAY=:99
           Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
 
-      # Step 6: Run Unit Tests
+      # Step 7: Run Unit Tests
       - name: Run Unit Tests
-        run: npm test -- --watch=false --code-coverage
+        run: npx ng test --watch=false --code-coverage
+        env:
+          DISPLAY: :99
 
-      # Step 7: Build the Angular app
+      # Step 8: Build the Angular app
       - name: Build Angular app
         run: npm run build --if-present
 
-      # Step 8: Start the Angular app
+      # Step 9: Start the Angular app
       - name: Start Angular app
         run: npm run start -- --host=0.0.0.0 &
         env:
           CI: true
 
-      # Step 9: Wait for the app to be ready
+      # Step 10: Wait for the app to be ready
       - name: Wait for the app to be ready
         run: npx wait-on http://localhost:4200
 
-      # Step 10: Count test files
+      # Step 11: Check for Cypress spec files
       - name: Check for Cypress spec files
         id: check_files
         run: |
@@ -80,15 +82,14 @@ jobs:
             echo "run_cypress=true" >> $GITHUB_ENV
           fi
 
-      # Step 11: Run Cypress tests in headless mode
+      # Step 12: Run Cypress tests in headless mode
       - name: Run Cypress tests
         if: ${{ env.run_cypress == 'true' }}
         run: npx cypress run --headless --browser chrome
         env:
-          CYPRESS_baseUrl: http://localhost:4201
+          CYPRESS_baseUrl: http://localhost:4200
 
-
-      # Step 12: Upload Coverage to Codecov
+      # Step 13: Upload Coverage to Codecov
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
