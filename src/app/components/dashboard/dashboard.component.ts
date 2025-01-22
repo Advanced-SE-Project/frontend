@@ -22,10 +22,10 @@ import { AuthService } from '../../services/auth.service';
     styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-  currentBalance: number = 0; // Dynamically calculated balance
+  currentBalance = 0; // Dynamically calculated balance
   receivedTransactions: Transaction[] = []; // Transactions of type 'receive'
   spentTransactions: Transaction[] = []; // Transactions of type 'spent'
-  errorMessage: string = ''; // Error message if transactions fail to load
+  errorMessage = ''; // Error message if transactions fail to load
 
   constructor(
     private transactionService: TransactionService,

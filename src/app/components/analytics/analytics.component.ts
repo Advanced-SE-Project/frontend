@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChartData } from 'chart.js';
 import { AnalyticsService } from '../../services/analytics.service';
 import { FormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { forkJoin, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { BarChartConfig, DoughnutChartConfig, LineChartConfig, PieChartConfig } from './analyticsCharts.config';
 
 @Component({
@@ -23,12 +23,12 @@ import { BarChartConfig, DoughnutChartConfig, LineChartConfig, PieChartConfig } 
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.scss'
 })
-export class AnalyticsComponent {
+export class AnalyticsComponent implements OnInit {
 
   dateRangeChange$: Subject<void> = new Subject<void>();
-  startMonth: string = '2025-01'; // Default start month
-  endMonth: string = '2025-12';   // Default end month
-  selectedCategory: string = 'Groceries'; // Default selected category
+  startMonth = '2025-01'; // Default start month
+  endMonth = '2025-12';   // Default end month
+  selectedCategory = 'Groceries'; // Default selected category
   categories: string[] = []; // List of categories
 
   // Chart Data

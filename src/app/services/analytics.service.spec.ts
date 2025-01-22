@@ -3,8 +3,7 @@ import { HttpTestingController, HttpClientTestingModule, provideHttpClientTestin
 import { AnalyticsService } from './analytics.service';
 import { AuthService } from '../services/auth.service';
 import { provideHttpClient } from '@angular/common/http';
-import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 describe('AnalyticsService', () => {
     let service: AnalyticsService;

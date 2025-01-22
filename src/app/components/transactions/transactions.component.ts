@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { TransactionService } from '../../services/transaction.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SidebarComponent } from '../sidebar/sidebar.component';
@@ -41,8 +40,8 @@ import { AuthService } from '../../services/auth.service';
 
 export class TransactionsComponent implements OnInit {
   transactionForm: FormGroup;
-  successMessage: string = '';
-  errorMessage: string = '';
+  successMessage = '';
+  errorMessage = '';
 
   receiveCategories = ['Salary', 'Investments', 'Gifts', 'Refunds', 'Other'];
   spentCategories = ['Groceries', 'Entertainment', 'Utilities', 'Rent', 'Other'];

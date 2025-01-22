@@ -4,7 +4,6 @@ import { SettingsComponent } from './settings.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 
 describe('SettingsComponent', () => {
