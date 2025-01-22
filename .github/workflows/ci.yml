@@ -56,21 +56,35 @@ jobs:
         env:
           DISPLAY: :99
 
-      # Step 8: Build the Angular app
+      # Step 8: Run Unit Tests
+      - name: List files in coverage directory
+        run: ls -R ./coverage || echo "Coverage directory not found"
+
+      # Step 9: Upload Coverage to Codecov
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/**/lcov.info
+          fail_ci_if_error: true
+          verbose: true
+        env:
+          CODECOV_DEBUG: true
+
+      # Step 10: Build the Angular app
       - name: Build Angular app
         run: npm run build --if-present
 
-      # Step 9: Start the Angular app
+      # Step 11: Start the Angular app
       - name: Start Angular app
         run: npm run start -- --host=0.0.0.0 &
         env:
           CI: true
 
-      # Step 10: Wait for the app to be ready
+      # Step 12: Wait for the app to be ready
       - name: Wait for the app to be ready
         run: npx wait-on http://localhost:4200
 
-      # Step 11: Check for Cypress spec files
+      # Step 13: Check for Cypress spec files
       - name: Check for Cypress spec files
         id: check_files
         run: |
@@ -82,16 +96,9 @@ jobs:
             echo "run_cypress=true" >> $GITHUB_ENV
           fi
 
-      # Step 12: Run Cypress tests in headless mode
+      # Step 14: Run Cypress tests in headless mode
       - name: Run Cypress tests
         if: ${{ env.run_cypress == 'true' }}
         run: npx cypress run --headless --browser chrome
         env:
           CYPRESS_baseUrl: http://localhost:4200
-
-      # Step 13: Upload Coverage to Codecov
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage/**/lcov.info
-          fail_ci_if_error: true
