@@ -2,13 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionsComponent } from './transactions.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-sidebar',
-  template: '<div>Mock Sidebar</div>',
-})
-class MockSidebarComponent {}
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TransactionsComponent', () => {
   let component: TransactionsComponent;
@@ -16,8 +14,10 @@ describe('TransactionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TransactionsComponent, MockSidebarComponent],
-      imports: [ReactiveFormsModule], // Include ReactiveFormsModule for formGroup
+      imports: [ReactiveFormsModule, TransactionsComponent, HttpClientTestingModule, RouterTestingModule, BrowserAnimationsModule],
+      providers: [
+        { provide: ActivatedRoute, useValue: { params: of({}) } },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TransactionsComponent);

@@ -2,9 +2,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardComponent } from './dashboard.component';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
+import { TransactionService } from '../../services/transaction.service';
+import { of } from 'rxjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
   template: '<div>Mock Sidebar</div>',
 })
 class MockSidebarComponent {}
@@ -13,9 +19,16 @@ describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
 
+  const mockTransactionService = {
+    getTransactions: () => of([]), // Mock implementation
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DashboardComponent, MockSidebarComponent],
+      imports: [DashboardComponent, BrowserAnimationsModule, MockSidebarComponent, RouterTestingModule, HttpClientTestingModule],
+      providers: [
+        { provide: TransactionService, useValue: mockTransactionService },
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
