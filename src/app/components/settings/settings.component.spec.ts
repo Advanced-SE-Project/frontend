@@ -4,6 +4,8 @@ import { SettingsComponent } from './settings.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -11,7 +13,7 @@ describe('SettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SettingsComponent, BrowserAnimationsModule, RouterTestingModule],
+      imports: [SettingsComponent, BrowserAnimationsModule, RouterTestingModule, MatButtonModule],
       providers: [
         { provide: ActivatedRoute, useValue: { params: of({}) } },
       ],
@@ -22,7 +24,9 @@ describe('SettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
+
+  
 });

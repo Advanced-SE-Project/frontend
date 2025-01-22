@@ -30,6 +30,10 @@ describe('TransactionService', () => {
     httpMock.verify(); // Ensure no outstanding requests
   });
 
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
   it('should create a transaction', () => {
     const mockTransaction = {
       userId: 1,
@@ -69,4 +73,29 @@ describe('TransactionService', () => {
     expect(req.request.headers.get('Authorization')).toBe('Bearer mock-token');
     req.flush(mockTransactions);
   });
+
+  it('should handle an error response when creating a transaction', () => {
+    const mockTransaction = { userId: 1, amount: 100, category: 'Food', type: 'Expense' };
+  
+    service.createTransaction(mockTransaction).subscribe(
+      () => fail('Expected an error, but got a success response'),
+      (error) => {
+        expect(error.status).toBe(400);
+      }
+    );
+  
+    const req = httpMock.expectOne(service['baseUrl']);
+    expect(req.request.method).toBe('POST');
+    req.flush({ message: 'Bad Request' }, { status: 400, statusText: 'Bad Request' });
+  });
+
+  it('should handle empty transactions response', () => {
+    service.getTransactions(1).subscribe((transactions) => {
+      expect(transactions).toEqual([]);
+    });
+  
+    const req = httpMock.expectOne((req) => req.url === service['baseUrl'] && req.params.get('userId') === '1');
+    req.flush([]); // Simulate an empty response
+  });  
+
 });
