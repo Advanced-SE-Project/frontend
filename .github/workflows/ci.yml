@@ -42,7 +42,7 @@ jobs:
       - name: Install Chrome dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libnss3 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libatk-bridge2.0-0 libxrandr2 libgbm1 libgtk-3-0 libasound2
+          sudo apt-get install -y libnss3 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libatk-bridge2.0-0 libxrandr2 libgbm1 libgtk-3-0
     
 
       # Step 6: Run Unit Tests
