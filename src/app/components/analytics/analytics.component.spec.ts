@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnalyticsService } from '../../services/analytics.service';
@@ -62,6 +63,22 @@ describe('AnalyticsComponent', () => {
     expect(component.onCategoryChange).toHaveBeenCalled();
   });
 
+  it('should render date range inputs and call onDateRangeChange', () => {
+    const startMonthInput = fixture.debugElement.query(By.css('#startMonth'));
+    const endMonthInput = fixture.debugElement.query(By.css('#endMonth'));
+
+    expect(startMonthInput).toBeTruthy();
+    expect(endMonthInput).toBeTruthy();
+
+    spyOn(component, 'onDateRangeChange');
+
+    startMonthInput.nativeElement.value = '2023-01';
+    startMonthInput.nativeElement.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+
+    expect(component.onDateRangeChange).toHaveBeenCalled();
+  });
+
   it('should render all categories in the dropdown', () => {
     component.categories = ['Sales', 'Marketing', 'Development']; // Set mock categories
     fixture.detectChanges(); // Refresh the DOM
@@ -89,7 +106,7 @@ describe('AnalyticsComponent', () => {
       '2023-01',
       '2023-12',
       'Sales'
-    ); // Ensure the service was called with correct arguments
-  });  
+    );
+  });
   
 });

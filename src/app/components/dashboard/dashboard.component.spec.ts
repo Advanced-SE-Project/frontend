@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { TransactionService } from '../../services/transaction.service';
 import { of } from 'rxjs';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { CurrencyPipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -25,8 +28,9 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardComponent, BrowserAnimationsModule, MockSidebarComponent, RouterTestingModule, HttpClientTestingModule],
+      imports: [DashboardComponent, BrowserAnimationsModule, MockSidebarComponent, RouterTestingModule, HttpClientTestingModule, MatIconModule, MatListModule],
       providers: [
+        CurrencyPipe,
         { provide: TransactionService, useValue: mockTransactionService },
       ]
     }).compileComponents();
@@ -36,7 +40,7 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
@@ -77,5 +81,5 @@ describe('DashboardComponent', () => {
     expect(spentItems.length).toBe(2);
     expect(spentItems[1].nativeElement.textContent).toContain('2023-04-01');
     expect(spentItems[1].nativeElement.textContent).toContain('€150.00');
-  });  
+  }); 
 });
