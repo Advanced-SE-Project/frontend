@@ -13,10 +13,10 @@ module.exports = function (config) {
     },
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/frontend-app'),
-      subdir: '.',
+      subdir: '.', // Keeps the files in the same directory
       reporters: [
-        { type: 'html' }, // This generates the HTML coverage report
-        { type: 'lcov' }  // This generates the lcov.info file
+        { type: 'html' }, // Generates HTML reports
+        { type: 'lcov' }  // Generates the lcov.info file
       ]
     },
     browsers: ['ChromeHeadless'],

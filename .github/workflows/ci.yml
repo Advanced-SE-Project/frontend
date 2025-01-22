@@ -56,7 +56,12 @@ jobs:
         env:
           DISPLAY: :99
 
-      # Step 8: Run Unit Tests
+      - name: Debug coverage directory
+        run: |
+          echo "Listing contents of coverage/frontend-app:"
+          ls -R ./coverage/frontend-app || echo "Coverage directory not found"
+
+      # Step 8: List files
       - name: List files in coverage directory
         run: ls -R ./coverage || echo "Coverage directory not found"
 
@@ -64,7 +69,7 @@ jobs:
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          files: ./coverage/**/lcov.info
+          files: ./coverage/frontend-app/lcov.info
           fail_ci_if_error: true
           verbose: true
         env:
