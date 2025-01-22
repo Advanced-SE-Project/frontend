@@ -22,14 +22,14 @@ export class TransactionService {
   }
 
   createTransaction(transaction: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/`, transaction, {
+    return this.http.post(this.baseUrl, transaction, {
       headers: this.getAuthHeaders(),
     });
   }
 
   getTransactions(userId: number): Observable<Transaction[]> {
     const params = new HttpParams().set('userId', userId.toString());
-    return this.http.get<Transaction[]>(`${this.baseUrl}/`, {
+    return this.http.get<Transaction[]>(this.baseUrl, {
       headers: this.getAuthHeaders(),
       params,
     });
