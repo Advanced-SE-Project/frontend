@@ -40,7 +40,7 @@ jobs:
 
       # Step 5: Run Unit Tests
       - name: Run Unit Tests
-        run: npx test -- --watch=false --code-coverage
+        run: npm test -- --watch=false --code-coverage
 
       # Step 6: Build the Angular app
       - name: Build Angular app
