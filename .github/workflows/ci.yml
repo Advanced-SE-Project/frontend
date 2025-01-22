@@ -38,25 +38,29 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Step 5: Run Unit Tests
+      # Step 5: Install Chrome dependencies (fix for headless mode)
+      - name: Install Chrome dependencies
+        run: sudo apt-get install -y libnss3 libgconf-2-4 libxi6 libxkbcommon-x11-0
+
+      # Step 6: Run Unit Tests
       - name: Run Unit Tests
         run: npm test -- --watch=false --code-coverage
 
-      # Step 6: Build the Angular app
+      # Step 7: Build the Angular app
       - name: Build Angular app
         run: npm run build --if-present
 
-      # Step 7: Start the Angular app
+      # Step 8: Start the Angular app
       - name: Start Angular app
-        run: npm start &
+        run: npm run start -- --host=0.0.0.0 &
         env:
           CI: true
 
-      # Step 8: Wait for the app to be ready
+      # Step 9: Wait for the app to be ready
       - name: Wait for the app to be ready
         run: npx wait-on http://localhost:4200
 
-      # Step 9: Count test files
+      # Step 10: Count test files
       - name: Check for Cypress spec files
         id: check_files
         run: |
@@ -68,14 +72,14 @@ jobs:
             echo "run_cypress=true" >> $GITHUB_ENV
           fi
 
-      # Step 10: Run Cypress tests conditionally
+      # Step 11: Run Cypress tests in headless mode
       - name: Run Cypress tests
         if: ${{ env.run_cypress == 'true' }}
-        run: npx cypress run
+        run: npx cypress run --headless --browser chrome
         env:
           CYPRESS_baseUrl: http://localhost:4200
 
-      # Step 11: Upload Coverage to Codecov
+      # Step 12: Upload Coverage to Codecov
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
