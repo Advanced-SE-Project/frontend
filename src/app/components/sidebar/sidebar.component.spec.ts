@@ -31,6 +31,10 @@ describe('SidebarComponent', () => {
     fixture.detectChanges(); // Trigger initial change detection
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
   it('should render correct labels for each menu item', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
