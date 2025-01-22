@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SupportComponent } from './support.component';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SupportComponent', () => {
   let component: SupportComponent;
@@ -7,7 +9,7 @@ describe('SupportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SupportComponent]
+      imports: [SupportComponent, BrowserAnimationsModule, RouterTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SupportComponent);

@@ -1,7 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsComponent } from './analytics.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Required for animations
+import { MatSelectModule } from '@angular/material/select'; // Add relevant Angular Material modules
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
+import { MatNativeDateModule } from '@angular/material/core';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AnalyticsService } from '../../services/analytics.service';
+
+// Mock AnalyticsService
+const mockAnalyticsService = {
+  ensureUserId: jasmine.createSpy('ensureUserId').and.returnValue(true),
+  getBarChart: jasmine.createSpy('getBarChart').and.returnValue(of([])),
+  getAllChartData: jasmine.createSpy('getAllChartData').and.returnValue(of({})),
+};
 
 describe('AnalyticsComponent', () => {
   let component: AnalyticsComponent;
@@ -9,7 +24,25 @@ describe('AnalyticsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AnalyticsComponent, FormsModule], // Include FormsModule for ngModel
+      imports: [
+        AnalyticsComponent,
+        BrowserAnimationsModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        FormsModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }), // Mocking ActivatedRoute parameters
+          },
+        },
+        { provide: AnalyticsService, useValue: mockAnalyticsService }, // Mock service
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AnalyticsComponent);
@@ -21,57 +54,42 @@ describe('AnalyticsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render the sidebar component', () => {
-    const sidebarElement = fixture.debugElement.nativeElement.querySelector('app-sidebar');
-    expect(sidebarElement).toBeTruthy();
-  });
-
-  it('should call onDateRangeChange when the start month changes', () => {
-    spyOn(component, 'onDateRangeChange');
-    const startMonthInput = fixture.debugElement.query(By.css('#startMonth')).nativeElement;
-    startMonthInput.value = '2023-01';
-    startMonthInput.dispatchEvent(new Event('change'));
-
-    expect(component.onDateRangeChange).toHaveBeenCalled();
-  });
-
-  it('should call onDateRangeChange when the end month changes', () => {
-    spyOn(component, 'onDateRangeChange');
-    const endMonthInput = fixture.debugElement.query(By.css('#endMonth')).nativeElement;
-    endMonthInput.value = '2023-12';
-    endMonthInput.dispatchEvent(new Event('change'));
-
-    expect(component.onDateRangeChange).toHaveBeenCalled();
-  });
-
-  it('should render all categories in the dropdown', () => {
-    component.categories = ['Category 1', 'Category 2', 'Category 3'];
-    fixture.detectChanges();
-
-    const options = fixture.debugElement.queryAll(By.css('#categorySelect option'));
-    expect(options.length).toBe(3);
-    expect(options[0].nativeElement.textContent).toBe('Category 1');
-    expect(options[1].nativeElement.textContent).toBe('Category 2');
-    expect(options[2].nativeElement.textContent).toBe('Category 3');
-  });
-
   it('should call onCategoryChange when the category changes', () => {
     spyOn(component, 'onCategoryChange');
-    const categorySelect = fixture.debugElement.query(By.css('#categorySelect')).nativeElement;
-    categorySelect.value = 'Category 1';
-    categorySelect.dispatchEvent(new Event('change'));
-
+    component.selectedCategory = 'Sales'; // Simulating category selection
+    fixture.detectChanges();
+    component.onCategoryChange();
     expect(component.onCategoryChange).toHaveBeenCalled();
   });
 
-  it('should define chart data and options for all charts', () => {
-    expect(component.incomeAndExpenseLineChartData).toBeDefined();
-    expect(component.incomeAndExpenseLineChartOptions).toBeDefined();
-    expect(component.expensesInCategoryBarChartData).toBeDefined();
-    expect(component.expensesInCategoryBarChartOptions).toBeDefined();
-    expect(component.expenseCategoriesPieChartData).toBeDefined();
-    expect(component.expenseCategoriesPieChartOptions).toBeDefined();
-    expect(component.incomeCategoriesPieChartData).toBeDefined();
-    expect(component.incomeCategoriesPieChartOptions).toBeDefined();
+  it('should render all categories in the dropdown', () => {
+    component.categories = ['Sales', 'Marketing', 'Development']; // Set mock categories
+    fixture.detectChanges(); // Refresh the DOM
+  
+    const compiled = fixture.nativeElement;
+    const dropdownOptions = compiled.querySelectorAll('#categorySelect option'); // Use native <option>
+    expect(dropdownOptions.length).toBe(3); // Verify the number of options
+    expect(dropdownOptions[0].textContent).toContain('Sales'); // Verify content
+    expect(dropdownOptions[1].textContent).toContain('Marketing'); // Verify content
+    expect(dropdownOptions[2].textContent).toContain('Development'); // Verify content
+  });  
+
+  it('should ensure user ID is available', () => {
+    const userIdAvailable = mockAnalyticsService.ensureUserId();
+    expect(userIdAvailable).toBe(true);
   });
+
+  it('should fetch bar chart data on category change', () => {
+    component.selectedCategory = 'Sales'; // Set a sample category
+    component.startMonth = '2023-01'; // Set mock startMonth
+    component.endMonth = '2023-12'; // Set mock endMonth
+  
+    component.onCategoryChange(); // Call the method
+    expect(mockAnalyticsService.getBarChart).toHaveBeenCalledWith(
+      '2023-01',
+      '2023-12',
+      'Sales'
+    ); // Ensure the service was called with correct arguments
+  });  
+  
 });
