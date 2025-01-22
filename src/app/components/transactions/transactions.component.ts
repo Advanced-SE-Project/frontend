@@ -85,9 +85,16 @@ export class TransactionsComponent implements OnInit {
     if (this.transactionForm.valid) {
       const transactionData = this.transactionForm.value;
   
-      // Format the date as YYYY-MM-DD
+      // Extract the raw date selected in the form
       const rawDate: Date = transactionData.date;
-      transactionData.date = rawDate.toISOString().split('T')[0];
+  
+      // Adjust for timezone offset by treating the date as local and formatting it as 'YYYY-MM-DD'
+      const adjustedDate = new Date(
+        rawDate.getTime() - rawDate.getTimezoneOffset() * 60000
+      ).toISOString().split('T')[0];
+  
+      // Update the transaction data with the adjusted date
+      transactionData.date = adjustedDate;
   
       // Dynamically fetch the userId
       const userId = this.authService.getUserId();
@@ -126,6 +133,6 @@ export class TransactionsComponent implements OnInit {
     } else {
       this.errorMessage = 'Please fill out all fields correctly.';
     }
-  }  
+  }    
   
 }
